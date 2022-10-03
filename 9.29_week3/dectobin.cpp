@@ -115,7 +115,6 @@ int main()
 }
 
 
-<<<<<<< HEAD
 
 
 
@@ -135,8 +134,6 @@ int main()
 
 
 
-=======
->>>>>>> 8b53cb27a9767899dd2fc0882afb6c5120817771
 MyBin::MyBin()
 {
     for(int i = 0; i < MAX; i++)
@@ -206,8 +203,6 @@ void MyBin::rePrintOut()
     }   
 }
 
-<<<<<<< HEAD
-=======
 int MyBin::FindFirstZero()
 {   
     int res;
@@ -231,79 +226,3 @@ void MyBin::BinToDec()
     }
     dec = sum;
 }
-
-void MyBin::DecToBin()
-{
-    int temp = dec, i = 0;
-    if(temp > 0)
-    {
-        while(temp != 0)
-        {
-            bin[i] = temp % 2;
-            temp /= 2;
-            i++;
-        }
-    }
-    else
-    {
-        while(temp != 0)
-        {
-            bin[i] = temp % 2;
-            temp /= 2;
-            i++;
-        }
-        NotBin(0, MAX - 1);
-        int first = FindFirstZero();
-        NotBin(0, first);
-    }
-    
-}
-
-void MyBin::NotBin(int a,int b)
-{
-    for(int i = b; i >= a; i--)
-    {
-        if(bin[i] == 0)
-            bin[i] = 1;
-        else
-            bin[i] = 0;
-    }
-    
-}
-
-void MyBin::PrintOut()
-{
-    for (int i = MAX - 1; i >= 0; i--)
-    {
-        printf("%d", bin[i]);
-    }   
-}
-
->>>>>>> 8b53cb27a9767899dd2fc0882afb6c5120817771
-int MyBin::FindFirstZero()
-{   
-    int res;
-    for(int i = MAX; i >= 0; i--)
-    {
-        if(bin[i] == 0)
-            res = i;
-    }
-    return res;
-}
-<<<<<<< HEAD
-
-void MyBin::BinToDec()
-{
-    int sum = 0;
-    int bit = 1;
-    for(int i = MAX - 1; i >= 0; i--)
-    {
-        if(bin[i] == 1)
-            sum += bit;
-        bit *= 2;
-    }
-    dec = sum;
-}
-=======
-        
->>>>>>> 8b53cb27a9767899dd2fc0882afb6c5120817771
