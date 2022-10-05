@@ -114,26 +114,6 @@ int main()
     return 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 MyBin::MyBin()
 {
     for(int i = 0; i < MAX; i++)
