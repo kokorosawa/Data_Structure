@@ -3,38 +3,105 @@
 #define MAX 100
 
 struct polynomial{
-	int coef;                       //å¤šé …å¼çš„ä¿‚æ•¸
-	int expon;                      //å¤šé …å¼çš„æŒ‡æ•¸
+	int coef;                       //¦h¶µ¦¡ªº«Y¼Æ
+	int expon;                      //¦h¶µ¦¡ªº«ü¼Æ
 };
 
 struct MyPoly{
-	polynomial terms[MAX];          //å¤šé …å¼é™£åˆ—
-	int size;                       //å¤šé …å¼å¤§å°
-	MyPoly();                       //å»ºæ§‹å­ åˆå§‹åŒ– size = 0
-	MyPoly(const char*);            //å»ºæ§‹å­ è®€å…¥æª”æ¡ˆ
+	polynomial terms[MAX];          //¦h¶µ¦¡°}¦C
+	int size;                       //¦h¶µ¦¡¤j¤p
+	MyPoly();                       //«Øºc¤l ªì©l¤Æ size = 0
+	MyPoly(const char*);            //«Øºc¤l Åª¤JÀÉ®×
 	
-	void ShowPoly();                //å°å‡ºå¤šé …å¼å…§å®¹
-	MyPoly Add(MyPoly);             //å¤šé …å¼ç›¸åŠ 
-	MyPoly SingleMult(polynomial);           //å°‡å¤šé …å¼ä¹˜ä¸Šä¸€é …
-	int Lead_Exp();                 //å›å‚³å¤šé …å¼ä¸­æœ€å¤§æŒ‡æ•¸çš„æ¬¡æ–¹
-	void Attach(int, int);          //æ–°å¢ 1 å€‹é …å¼åˆ°å¤šé …å¼ä¸­
-	void Remove(int);               //åˆªé™¤å¤šé …å¼ä¸­çš„æŸä¸€æŒ‡æ•¸
+	void ShowPoly();                //¦L¥X¦h¶µ¦¡¤º®e
+	MyPoly Add(MyPoly);             //¦h¶µ¦¡¬Û¥[
+	MyPoly SingleMult(int);           //±N¦h¶µ¦¡­¼¤W¤@¶µ
+	int Lead_Exp();                 //¦^¶Ç¦h¶µ¦¡¤¤³Ì¤j«ü¼Æªº¦¸¤è
+	MyPoly Attach(int, int);          //·s¼W 1 ­Ó¶µ¦¡¨ì¦h¶µ¦¡¤¤
+	MyPoly Remove(int);               //§R°£¦h¶µ¦¡¤¤ªº¬Y¤@«ü¼Æ
+	void Read(const char*);
+	MyPoly Mult(MyPoly);
 
-    // ä½œæ¥­2
-	// MyPoly Mult(MyPoly);         //å¤šé …å¼ç›¸ä¹˜
+    // §@·~2
+	// MyPoly Mult(MyPoly);         //¦h¶µ¦¡¬Û­¼
 };
 
 int main(){
-	MyPoly poly1("B1.txt");
-	MyPoly poly2("B2.txt");
+	MyPoly poly1;
+	MyPoly poly2;
 	MyPoly poly3;
-	poly1.ShowPoly(); 
-	poly2.ShowPoly();
-	polynomial t;
-	t.coef = 10;
-	t.expon = 10;
-	poly3 = poly1.Add(poly2);
-	poly3.ShowPoly();
+	MyPoly poly4;
+	MyPoly poly6;
+	MyPoly poly7;
+	MyPoly poly8;
+	int op;
+	int ceof;
+	int expon;
+	while(1)
+	{
+		printf("1. Åª¤J¦h¶µ¦¡\n");
+		printf("2. ¦L¥X¦h¶µ¦¡¤º®e\n");
+		printf("3. ¦h¶µ¦¡¬Û¥[\n");
+		printf("4. ¦h¶µ¦¡¬Û­¼¤@¼Æ­È\n");
+		printf("5. ¦L¥X¦h¶µ¦¡¤¤³Ì¤j«ü¼Æªº«Y¼Æ\n");
+		printf("6. ·s¼W¶µ¦¡\n");
+		printf("7. §R°£¦h¶µ¦¡¤¤ªº¶µ¦¡\n");
+		printf("8. ¦h¶µ¦¡¬Û­¼\n");
+		printf("9. µ²§ôµ{¦¡\n");
+		printf("Option:");
+		scanf("%d", &op);
+		switch (op)
+		{
+		case 1:
+			poly1.Read("B1.txt");
+			poly2.Read("B2.txt");
+			break;
+		case 2:
+			printf("poly1:");
+			poly1.ShowPoly();
+			printf("poly2:");
+			poly2.ShowPoly();
+			break;
+		case 3:
+			poly3 = poly1.Add(poly2);
+			poly3.ShowPoly();
+			break;
+		case 4:		
+			int b;
+			scanf("%d", &b);
+			poly4 = poly1.SingleMult(b);
+			poly4.ShowPoly();
+			break;
+		case 5:
+			int ans;
+			ans = poly1.Lead_Exp();
+			printf("%d\n", ans);
+			break;
+		case 6:
+			printf("coef:");
+			scanf("%d", &ceof);
+			printf("expon:");
+			scanf("%d", &expon);
+			poly6 = poly1.Attach(ceof, expon);
+			poly6.ShowPoly();
+			break;
+		case 7:
+			printf("expon:");
+			scanf("%d", &expon);
+			poly7 = poly1.Remove(expon);
+			poly7.ShowPoly();
+			break;
+		case 8:
+			poly8 = poly1.Mult(poly2);
+			poly8.ShowPoly();
+			break;
+		case 9:
+			exit(0);
+			break;		
+		default:
+			break;
+		}
+	}
 	return 0;
 } 
 
@@ -45,7 +112,19 @@ MyPoly::MyPoly()
 
 MyPoly::MyPoly(const char* filename)
 {	
-	FILE *fptr = nullptr;
+	FILE *fptr;
+	fptr = fopen(filename, "r");
+	size = 0;
+	while(!feof(fptr))
+	{
+		fscanf(fptr, "%d %d", &terms[size].coef, &terms[size].expon);
+		size++;
+	}
+}
+
+void MyPoly::Read(const char* filename)
+{
+	FILE *fptr;
 	fptr = fopen(filename, "r");
 	size = 0;
 	while(!feof(fptr))
@@ -64,13 +143,13 @@ void MyPoly::ShowPoly()
 	printf("\b \n");
 }
 
-MyPoly MyPoly::SingleMult(polynomial p)
+MyPoly MyPoly::SingleMult(int b)
 {
 	MyPoly res;
 	for(int i = 0; i < size; i++)
 	{
-		res.terms[i].coef = terms[i].coef * p.coef;
-		res.terms[i].expon = terms[i].expon + p.expon;
+		res.terms[i].coef = terms[i].coef * b;
+		res.terms[i].expon = terms[i].expon;
 		res.size++;
 	}
 	return res;
@@ -114,17 +193,56 @@ int MyPoly::Lead_Exp()
 	return terms[0].expon;
 }
 
-void MyPoly::Attach(int coef, int expon)	
+MyPoly MyPoly::Attach(int coef, int expon)	
 {
-	
+	MyPoly res;
+	res.terms[0].coef = coef;
+	res.terms[0].expon = expon;
+	for(int i = 1; i < size + 1; i++)
+	{
+		res.terms[i].coef = terms[i - 1].coef;
+		res.terms[i].expon = terms[i - 1].expon;
+	}
+	res.size = size + 1;
+	return res;
 }
-void MyPoly::Remove(int num)
+MyPoly MyPoly::Remove(int num)
 {
+	MyPoly res;
+	int i;
+	for(i = 0; i < size; i++)
+	{	
+		if(terms[i].expon == num)
+			break;
+		res.terms[i].coef = terms[i].coef;
+		res.terms[i].expon = terms[i].expon;
+		res.size++;
+	}
 	
+	for(i = i; i < size - 1; i++)
+	{	
+		res.terms[i].coef = terms[i + 1].coef;
+		res.terms[i].expon = terms[i + 1].expon;
+		res.size++;
+	}
+
+	return res;
 }
 
-// MyPoly MyPoly::Mult(MyPoly B)
-// {
-    
-// }
+MyPoly MyPoly::Mult(MyPoly b) 
+{
+    MyPoly res;
+	int tempsize = 0;
+	for(int i = 0; i < size; i++)
+	{
+		for(int j = 0; j < b.size; j++)
+		{
+			res.terms[tempsize].coef = terms[i].coef * b.terms[j].coef;
+			res.terms[tempsize].expon = terms[i].expon + b.terms[j].expon;
+			tempsize++;
+		}
+	}
+	res.size = tempsize;
+	return res;
+}
 
