@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<time.h>
 #include<string.h>
+#include<math.h>
 #define MAX 40
 #define Len 20
 
@@ -13,21 +14,22 @@ struct LongInt
 	LongInt();
 	LongInt(int);
 	LongInt(const char*);
-	void Init();   					//§Q¥Î¶Ã¼Æ²£¥Í¤@­Óªø«×¤p©ó19ªº­È
-	void Init(int num);  			//«ü©w¤@­Óªø«×¤p©ó19ªº­È
-	LongInt operator=(int); 			//¹Bºâ¤l¦h¸ü
-	void Zero();  					//±N¥»¨­ªº°}¦Cªì©l¬°0
-	void Show(); 					//Åã¥Ü°}¦C
+	void Init();   					//ï¿½Qï¿½Î¶Ã¼Æ²ï¿½ï¿½Í¤@ï¿½Óªï¿½ï¿½×¤pï¿½ï¿½19ï¿½ï¿½ï¿½ï¿½
+	void Init(int num);  			//ï¿½ï¿½ï¿½wï¿½@ï¿½Óªï¿½ï¿½×¤pï¿½ï¿½19ï¿½ï¿½ï¿½ï¿½
+	LongInt operator=(int); 			//ï¿½Bï¿½ï¿½lï¿½hï¿½ï¿½
+	void Zero();  					//ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½Cï¿½ï¿½lï¿½ï¿½0
+	void Show();
+	void Showlong(); 					//ï¿½ï¿½Ü°}ï¿½C
 	
-	int Compare(LongInt b); 		//¤ñ¸û¥»¨­¸òªø¾ã¼Æb¤§¶¡¦óªÌ¸û¤j¡A­Y¤j©ób«h¦^¶Ç1¡A¤Ï¤§¡A«h¦^¶Ç-1
+	int Compare(LongInt b); 		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ï¿½jï¿½Aï¿½Yï¿½jï¿½ï¿½bï¿½hï¿½^ï¿½ï¿½1ï¿½Aï¿½Ï¤ï¿½ï¿½Aï¿½hï¿½^ï¿½ï¿½-1
 	bool operator>(LongInt b);
 	bool operator<(LongInt b);
 	bool operator==(LongInt b);
 	
 	LongInt Add(LongInt);
-	LongInt operator+(LongInt); 	//¹Bºâ¤l¦h¸ü
+	LongInt operator+(LongInt); 	//ï¿½Bï¿½ï¿½lï¿½hï¿½ï¿½
 	LongInt Sub(LongInt);
-	LongInt operator-(LongInt); 	//¹Bºâ¤l¦h¸ü     123456
+	LongInt operator-(LongInt); 	//ï¿½Bï¿½ï¿½lï¿½hï¿½ï¿½     123456
 	
 //	HW
 	LongInt Multi(LongInt);
@@ -37,49 +39,39 @@ struct LongInt
 };
 
 int main(){
-	LongInt a(11);
-	LongInt b(1111);  // '1' - '0'  char s[]="12345.....", s[i]-'0'
-	LongInt c(1111);
-	LongInt d;
-	LongInt e="1234567891234567891"; 
-	
-	LongInt h; 
+	// LongInt a = "55454";
+	// LongInt b = "143";  // '1' - '0'  char s[]="12345.....", s[i]-'0'
+	LongInt c;
+	LongInt a = "18468284177722972105";
+	LongInt b = "57485431294651594451"; 
 	printf("a=");
 	a.Show();
 	printf("b=");
 	b.Show();
-	c=a.Add(b);
-	printf("c=");
+
+	printf("a+b=");
+	c = a.Add(b);
 	c.Show();
-	
-	c=a+b;
-	printf("c=");
+	printf("a-b=");
+	c = a.Sub(b);
 	c.Show();
-	if(a>b)
-		printf("a>b\n");
-	else if(a<b)
-		printf("a<b\n");
-	else
-		printf("a==b\n");
-	
-	d=a.Sub(b);
-	printf("d=");
-	d.Show();
-	
-	d=a-b;
-	printf("d=");
-	d.Show();
-	printf("e=");
-	e.Show();
-	
-	h=b.Multi(c);
-	printf("b.Multi(c)=\n");
-	h.Show();
-	
-	h=b*c;
-	printf("b*c=\n");
-	h.Show();
-	return 0;
+
+	printf("a*b=");
+	c = a.Multi(b);
+	c.Showlong();
+	printf("b/c=");
+	c = a.Div(b);
+	c.Show();
+
+	// printf("a=");
+	// t.Show();
+	// printf("b=");
+	// s.Show();
+
+	// c = t * s;
+	// printf("b*c=\n");
+	// c.Showlong();
+	// return 0;
 }
 
 //==================================================== 
@@ -120,6 +112,7 @@ LongInt::LongInt(const char *str)
 	int i=0; 
 	int len=strlen(str); 
 	Zero();
+	IsPositive = true;
 	while(str[i]!='\0')
 	{
 		MyInt[i]=str[len-1-i]-'0';
@@ -130,7 +123,7 @@ LongInt::LongInt(const char *str)
 //====================================================
 void LongInt::Zero()
 {
-	for(int i=0;i<Len;i++)
+	for(int i=0;i<MAX;i++)
 	{
 		MyInt[i]=0;
 	}
@@ -141,6 +134,17 @@ void LongInt::Show()
 	if(IsPositive) printf(" ");
 	else printf("-");
 	for(int i=Len-1;i>=0;i--)
+	{
+		printf("%d", MyInt[i]);
+	}
+	printf("\n");
+}
+
+void LongInt::Showlong()
+{
+	if(IsPositive) printf(" ");
+	else printf("-");
+	for(int i = MAX-1;i >=0;i--)
 	{
 		printf("%d", MyInt[i]);
 	}
@@ -260,12 +264,19 @@ LongInt LongInt::Multi(LongInt b){
 		for(int j = 0; j < Len; j++)
 		{
 			res.MyInt[size] += MyInt[i] * b.MyInt[j];
-			if(res.MyInt[i]>=10)
-			{
-				res.MyInt[i+1]+=res.MyInt[i]/10;
-				res.MyInt[i]=res.MyInt[i]%10;
-			}
 			size++;
+		}
+	}
+
+	res.MyInt[1]+=res.MyInt[0]/10;
+	res.MyInt[0]=res.MyInt[0]%10;
+
+	for(int i = 1; i < MAX; i++)
+	{
+		if(res.MyInt[i - 1]>=10)
+		{
+			res.MyInt[i]+=res.MyInt[i - 1]/10;
+			res.MyInt[i - 1]=res.MyInt[i - 1]%10;
 		}
 	}
 	return res;
@@ -276,23 +287,56 @@ LongInt LongInt::operator *(LongInt b)
 	return Multi(b); 
 }
 
-// LongInt LongInt::Multi(LongInt b){
-// 	LongInt res;
-// 	res.Zero();
-// 	int size = 0;
-// 	for(int i = 0; i < Len; i++)
-// 	{
-// 		size = i;
-// 		for(int j = 0; j < Len; j++)
-// 		{
-// 			res.MyInt[size] += MyInt[i] * b.MyInt[j];
-// 			if(res.MyInt[i]>=10)
-// 			{
-// 				res.MyInt[i+1]+=res.MyInt[i]/10;
-// 				res.MyInt[i]=res.MyInt[i]%10;
-// 			}
-// 			size++;
-// 		}
-// 	}
-// 	return res;
-// }
+LongInt LongInt::Div(LongInt b){
+	LongInt res;
+	res.Zero();
+	int len;
+	int len_b;
+
+	for(int i = Len - 1; i >= 0; i--)
+	{
+		if(MyInt[i] != 0)
+		{
+			len = i + 1;
+			break;
+		}	
+	}
+
+	for(int i = Len - 1; i >= 0; i--)
+	{
+		if(b.MyInt[i] != 0)
+		{
+			len_b = i + 1;
+			break;
+		}
+	}
+
+	if(len_b > len)
+	{
+		res = 0;
+		return res;
+	}
+	
+	int n = len - len_b;
+	LongInt temp;
+	LongInt ori;
+	for(int i = 0; i < Len; i++)
+		ori.MyInt[i] = MyInt[i];
+
+	for(int i = n; i >= 0; i--)
+	{	
+		temp = b.Multi(pow(10, i));
+		int ans = 0;
+		while (1)
+		{	
+			if(ori.Compare(temp) == -1)
+				break;
+			ori = ori.Sub(temp);
+			ans++;
+		}
+		
+		res.MyInt[i] = ans;
+	}
+
+	return res;
+}
