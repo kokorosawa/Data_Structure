@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<time.h>
 #include<string.h>
+#include<math.h>
 #define MAX 40
 #define Len 20
 
@@ -38,8 +39,8 @@ struct LongInt
 };
 
 int main(){
-	LongInt a = "99999999999999999999";
-	LongInt b = "99999999999999999999";  // '1' - '0'  char s[]="12345.....", s[i]-'0'
+	LongInt a = "55454";
+	LongInt b = "143";  // '1' - '0'  char s[]="12345.....", s[i]-'0'
 	LongInt c;
 	LongInt t = "18468284177722972105";
 	LongInt s = "57485431294651594451"; 
@@ -48,19 +49,19 @@ int main(){
 	printf("b=");
 	b.Show();
 
-	c = b * a;
-	printf("b*c=\n");
-	c.Showlong();
+	c = a.Div(b);
+	printf("b/c=");
+	c.Show();
 
-	printf("a=");
-	t.Show();
-	printf("b=");
-	s.Show();
+	// printf("a=");
+	// t.Show();
+	// printf("b=");
+	// s.Show();
 
-	c = t * s;
-	printf("b*c=\n");
-	c.Showlong();
-	return 0;
+	// c = t * s;
+	// printf("b*c=\n");
+	// c.Showlong();
+	// return 0;
 }
 
 //==================================================== 
@@ -279,6 +280,53 @@ LongInt LongInt::operator *(LongInt b)
 LongInt LongInt::Div(LongInt b){
 	LongInt res;
 	res.Zero();
-	int size = 0;
+	int len;
+	int len_b;
+
+	for(int i = Len - 1; i >= 0; i--)
+	{
+		if(MyInt[i] != 0)
+		{
+			len = i + 1;
+			break;
+		}	
+	}
+
+	for(int i = Len - 1; i >= 0; i--)
+	{
+		if(b.MyInt[i] != 0)
+		{
+			len_b = i + 1;
+			break;
+		}
+	}
+
+	if(len_b > len)
+	{
+		res = 0;
+		return res;
+	}
+	
+	int n = len - len_b;
+	LongInt temp;
+	LongInt ori;
+	for(int i = 0; i < Len; i++)
+		ori.MyInt[i] = MyInt[i];
+
+	for(int i = n; i >= 0; i--)
+	{	
+		temp = b.Multi(pow(10, i));
+		int ans = 0;
+		while (1)
+		{	
+			if(ori.Compare(temp) == -1)
+				break;
+			ori = ori.Sub(temp);
+			ans++;
+		}
+		
+		res.MyInt[i] = ans;
+	}
+
 	return res;
 }
