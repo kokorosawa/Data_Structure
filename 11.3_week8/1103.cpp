@@ -145,8 +145,8 @@ void SplitData::ShowInfix()
 	for(int i=0;i<count;i++)
 	{
 		if(item[i].type==val)
-			printf("%d", item[i].value);
+			printf("%d ", item[i].value);
 		else
-			printf("%c",item[i].oper);
+			printf("%c ",item[i].oper);
 	}
 }
