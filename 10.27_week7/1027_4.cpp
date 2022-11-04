@@ -59,7 +59,7 @@ int main(){
 			s.Push(a[i]);
 			if(count > 0)
 				count++;
-			else if(a[i] == 'e')
+			if(a[i] == 'e')
 				count = 1;
 			
 			if(a[i] == 's')
@@ -76,7 +76,7 @@ int main(){
 		s.Show();
 		a[0]='\0';
 	}
-	return 0;	
+	return 0;
 }
 //=========================================
 void MyStack::Show()
