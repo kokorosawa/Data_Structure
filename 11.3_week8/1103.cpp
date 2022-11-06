@@ -40,10 +40,26 @@ struct MyStack
 
 int main()
 {
-	char s[80]="4*2+10-9/3";   //1234*
-	SplitData DataInfix;
-	DataInfix.Split(s);
-	DataInfix.ShowInfix();
+	// char s[80]="4*2+10-9/3";   //1234*
+	// SplitData DataInfix;
+	// DataInfix.Split(s);
+	// DataInfix.ShowInfix();
+	// DataInfix.InfixToPost();
+	// DataInfix.ShowPostfix();
+
+	FILE *fptr = fopen("1103hw.txt", "r");
+	char a[80];
+	while(!feof(fptr)){
+		fscanf(fptr, "%s", a);
+		SplitData DataInfix;
+		printf("---------------------------\n");
+		//printf("%s\n",a);
+		DataInfix.Split(a);
+		DataInfix.ShowInfix();
+		DataInfix.InfixToPost();
+		DataInfix.ShowPostfix();
+		a[0] = '\0';
+	}
 	return 0;
 } 
 
@@ -74,16 +90,12 @@ data MyStack::Pop()
 {
 	if(IsEmpty())
 		printf("The STACK is empty");
-	else
-		return a[top--];
-	return a[top--];	
+	return a[top--];
 }
 data MyStack::Top()
 {
 	if(IsEmpty())
 		printf("The STACK is empty");
-	else
-		return a[top];
 	return a[top];
 }
 //======================================================
@@ -107,13 +119,13 @@ void SplitData::Split(char *str)
 				 	temp[j]='\0';
 				 	item[count].type=val;
 				 	item[count].value=atoi(temp);
-				 	printf("%d\n",item[count].value);
+				 	//printf("%d\n",item[count].value);
 				 	j=0;
 				 	count++;
 				 }
 				 item[count].type=op;
 				 item[count].oper=str[i];
-				 printf("%c\n",item[count].oper);
+				 //printf("%c\n",item[count].oper);
 				 count++;
 				 break;
 			default:
@@ -127,7 +139,7 @@ void SplitData::Split(char *str)
 		temp[j]='\0';
 	 	item[count].type=val;
 	 	item[count].value=atoi(temp);
-	 	printf("%d\n",item[count].value);
+	 	//printf("%d\n",item[count].value);
 	 	j=0;
 	 	count++;
 	}
@@ -145,8 +157,89 @@ void SplitData::ShowInfix()
 	for(int i=0;i<count;i++)
 	{
 		if(item[i].type==val)
-			printf("%d ", item[i].value);
+			printf(" %d ", item[i].value);
 		else
-			printf("%c ",item[i].oper);
+			printf("%c",item[i].oper);
 	}
+	printf("\n");
 }
+//==========================================
+void SplitData::InfixToPost()
+{
+	MyStack s;
+	int i=0,j=0;
+	for(i=0;i<count;i++)
+	{
+		if(item[i].type==val)
+		{
+			postitem[j]=item[i];
+			//printf("%d\n", item[i].value);
+			j++;
+		}
+		else
+		{
+			if(s.IsEmpty())
+			{
+				//printf("%c",item[i].oper);
+				s.Push(item[i]);
+			}
+			else
+			{
+				if(item[i].oper == '(')
+				{
+					item[i].priority = 0;
+					//printf("%c",item[i].oper);
+					s.Push(item[i]);
+				}
+				else if(item[i].oper == ')')
+				{
+					while(!s.IsEmpty())
+					{
+						if(s.a[s.top].oper == '(')
+						{	
+							s.Pop();
+							break;
+						}
+						else
+						{
+							postitem[j] = s.Pop();
+							j++;
+						}
+					}
+				}
+				else
+				{
+					while(s.a[s.top].priority>=item[i].priority&&!s.IsEmpty())
+					{
+						postitem[j]=s.Pop();
+						//printf("%c\n",postitem[j].oper);
+						j++;
+					}
+					//printf("%c",item[i].oper);
+					s.Push(item[i]);
+				}
+			}
+		}
+	}
+	while(!s.IsEmpty())
+	{
+		postitem[j]=s.Pop();
+		//printf("%c\n",postitem[j].oper);
+		j++;
+	}
+	count = j;
+}
+//=======================================================
+void SplitData::ShowPostfix()
+{
+	for(int i=0;i<count;i++)
+	{
+		if(postitem[i].type==val)
+			printf(" %d ", postitem[i].value);
+		else
+			printf("%c",postitem[i].oper);
+	}
+	printf("\n");
+}
+
+
