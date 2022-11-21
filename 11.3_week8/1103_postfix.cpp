@@ -21,6 +21,7 @@ struct SplitData
 	void ShowInfix();	
 	void InfixToPost();
 	void ShowPostfix(); 	
+	data Calculate();
 };
 
 struct MyStack
@@ -58,6 +59,8 @@ int main()
 		DataInfix.ShowInfix();
 		DataInfix.InfixToPost();
 		DataInfix.ShowPostfix();
+		data num = DataInfix.Calculate();
+		printf("%d\n", num.value);
 		a[0] = '\0';
 	}
 	return 0;
@@ -242,4 +245,42 @@ void SplitData::ShowPostfix()
 	printf("\n");
 }
 
+data SplitData::Calculate()
+{
+	MyStack s;
+	for(int i = 0; i < count; i++)
+	{
+		if(postitem[i].type == val)
+		{
+			s.Push(postitem[i]);
+		}
+		else
+		{
+			data num1 = s.Pop();
+			data num2 = s.Pop();
 
+			data ans;
+			switch (postitem[i].oper)
+			{
+			case '+':
+				ans.value = num1.value + num2.value;
+				break;
+			case '-':
+				ans.value = num2.value - num1.value;
+				break;
+			case '*':
+				ans.value = num1.value * num2.value;
+				break;
+			case '/':
+				ans.value = num2.value / num1.value;
+				break;		
+			default:
+				break;
+			}
+			s.Push(ans);
+		}
+	}
+
+	data res = s.Pop();
+	return res;
+}
