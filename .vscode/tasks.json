@@ -3,8 +3,8 @@
 	"tasks": [
 		{
 			"type": "cppbuild",
-			"label": "C/C++: g++.exe 建置使用中檔案",
-			"command": "C:\\mingw64\\bin\\g++.exe",
+			"label": "C/C++: g++.exe build active file",
+			"command": "C:\\MinGW\\bin\\g++.exe",
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
@@ -13,13 +13,13 @@
 				"${fileDirname}\\${fileBasenameNoExtension}.exe"
 			],
 			"options": {
-				"cwd": "${fileDirname}"
+				"cwd": "C:\\MinGW\\bin"
 			},
 			"problemMatcher": [
 				"$gcc"
 			],
 			"group": "build",
-			"detail": "編譯器: C:\\mingw64\\bin\\g++.exe"
+			"detail": "compiler: C:\\MinGW\\bin\\g++.exe"
 		}
 	]
 }
